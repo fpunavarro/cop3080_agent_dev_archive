@@ -17,3 +17,6 @@ async def main():
     print("All greetings completed!")
  
 asyncio.run(main())
+=======
+# async_test.py
+import asynciomain
