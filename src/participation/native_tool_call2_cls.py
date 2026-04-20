@@ -4,7 +4,7 @@ import requests
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage, ToolMessage
 from langchain.tools import tool, BaseTool
-#from langchain_ollama import ChatOllama
+from langchain_ollama import ChatOllama
 from langchain_google_genai import ChatGoogleGenerativeAI
 from callbacks import AgentCallbackHandler
 
@@ -20,8 +20,26 @@ def get_text_length(text: str) -> int:
 
     return len(text)
 
-#PLACEHOLDER#
-#PLACEHOLDER#
+@tool
+def get_city_temperature(city: str) -> str:
+    """Returns the current temperature in Fahrenheit for a US city"""
+    print(f"get_city_temperature enter with {city=}")
+    geo_url = "https://geocoding-api.open-meteo.com/v1/search"
+    geo_resp = requests.get(geo_url, params={"name": city, "count": 1, "country": "US", "language": "en", "format": "json"})
+    geo_resp.raise_for_status()
+    results = geo_resp.json().get("results")
+    if not results:
+        return f"Could not find US city: {city}"
+    lat, lon = results[0]["latitude"], results[0]["longitude"]
+    weather_url = "https://api.open-meteo.com/v1/forecast"
+    weather_resp = requests.get(weather_url, params={
+        "latitude": lat, "longitude": lon,
+        "current_weather": True,
+        "temperature_unit": "fahrenheit",
+    })
+    weather_resp.raise_for_status()
+    temp = weather_resp.json()["current_weather"]["temperature"]
+    return f"The current temperature in {city} is {temp}°F"
 
 
 def find_tool_by_name(tools: List[BaseTool], tool_name: str) -> BaseTool:
@@ -33,7 +51,7 @@ def find_tool_by_name(tools: List[BaseTool], tool_name: str) -> BaseTool:
 
 if __name__ == "__main__":
     print("Hello LangChain Tools (.bind_tools)!")
-    tools = [get_text_length] #PLACEHOLDER# modify this line
+    tools = [get_text_length, get_city_temperature] 
 
     '''llm = ChatOllama(temperature=0, model="gemma3:1b-it-qat",
         callbacks=[AgentCallbackHandler()],

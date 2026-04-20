@@ -61,9 +61,10 @@ In 2019, Python became the second most popular language on GitHub, the largest s
         input_variables=["information"], template=summary_template
     )
 # Create model
-    #PLACEHOLDER#
-
-    chain = summary_prompt_template | llm
+    llm = ChatOllama(
+        model="gemma3:270m", temperature=0
+    )
+    chain = summary_prompt_template | llm 
     print("invoking chain now...")
     response = chain.invoke(input={"information": information})
     print(response.content)
@@ -71,3 +72,5 @@ In 2019, Python became the second most popular language on GitHub, the largest s
 
 if __name__ == "__main__":
     main()
+
+# ollama run gemma3:1b-itt-qat

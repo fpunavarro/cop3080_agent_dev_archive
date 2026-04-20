@@ -1,0 +1,20 @@
+[project]
+name = "l27-pa"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "asyncio>=4.0.0",
+    "dotenv>=0.9.9",
+    "langchain>=1.2.15",
+    "langchain-community>=0.4.1",
+    "langchain-core>=1.2.27",
+    "langchain-google-genai>=4.2.1",
+    "langchain-ollama>=1.1.0",
+    "langchain-text-splitters>=1.1.1",
+    "ollama>=0.6.1",
+    "pinecone>=8.1.2",
+    "python-dotenv>=1.2.2",
+    "requests>=2.33.1",
+]
