@@ -10,7 +10,7 @@ print("this is a test, cn ")
 def main():
     print("Hello from Python course!")
     information = """
-   Guido van Rossum (Dutch: [ˈxidoː vɑn ˈrɔsʏm]; born 31 January 1956) is a Dutch programmer. He is the creator of the Python programming language, for which he was the "benevolent dictator for life" (BDFL) until he stepped down from the position on 12 July 2018.[4][5] He remained a member of the Python Steering Council through 2019, and withdrew from nominations for the 2020 election.[6]
+    Guido van Rossum (Dutch: [ˈxidoː vɑn ˈrɔsʏm]; born 31 January 1956) is a Dutch programmer. He is the creator of the Python programming language, for which he was the "benevolent dictator for life" (BDFL) until he stepped down from the position on 12 July 2018.[4][5] He remained a member of the Python Steering Council through 2019, and withdrew from nominations for the 2020 election.[6]
 
 Life and education
 Van Rossum was born and raised in the Netherlands, where he received a master's degree in mathematics and computer science from the University of Amsterdam in 1982. He received a bronze medal in 1974 in the International Mathematical Olympiad.[7] His brother, Just van Rossum, is a type designer and programmer who designed the typeface used in the "Python Powered" logo.[8]
@@ -61,7 +61,9 @@ In 2019, Python became the second most popular language on GitHub, the largest s
         input_variables=["information"], template=summary_template
     )
 # Create model
-    #PLACEHOLDER#
+    llm = ChatOllama(
+        model="gemma3:1b-it-qat", temperature=0
+    )
 
     chain = summary_prompt_template | llm
     print("invoking chain now...")
